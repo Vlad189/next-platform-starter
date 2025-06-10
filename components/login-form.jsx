@@ -16,16 +16,23 @@ export function LoginForm() {
         // Simulate authentication
         setTimeout(() => {
             if (login && password) {
-                localStorage.setItem('nmt_user', JSON.stringify({ login, timestamp: Date.now() }));
-                router.push('/test');
+                localStorage.setItem('nmt_user', JSON.stringify({ 
+                    login, 
+                    timestamp: Date.now(),
+                    accessCodes: {
+                        block1: Math.random().toString(36).substring(2, 8).toUpperCase(),
+                        block2: Math.random().toString(36).substring(2, 8).toUpperCase()
+                    }
+                }));
+                router.push('/entrance');
             }
             setIsLoading(false);
         }, 1000);
     };
 
     return (
-        <div className="bg-white rounded-lg shadow-lg p-8 border border-gray-200">
-            <h2 className="text-xl font-semibold text-gray-800 mb-6">Увійти</h2>
+        <div className="bg-white rounded-lg shadow-lg p-8 border border-gray-300">
+            <h2 className="text-xl font-semibold text-purple-700 mb-6">Увійти</h2>
             
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
@@ -38,7 +45,7 @@ export function LoginForm() {
                         value={login}
                         onChange={(e) => setLogin(e.target.value)}
                         placeholder="D1792"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                        className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500"
                         required
                     />
                     <p className="text-xs text-gray-500 mt-1">
@@ -56,7 +63,7 @@ export function LoginForm() {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="ed092"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                        className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-purple-500 focus:border-purple-500"
                         required
                     />
                 </div>
@@ -64,7 +71,7 @@ export function LoginForm() {
                 <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full bg-purple-700 hover:bg-purple-800 text-white font-medium py-2 px-4 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full bg-purple-700 hover:bg-purple-800 text-white font-medium py-2 px-4 rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                     {isLoading ? 'Увійти...' : 'Увійти'}
                 </button>
